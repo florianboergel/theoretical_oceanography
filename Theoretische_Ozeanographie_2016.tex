@@ -1,0 +1,182 @@
+\documentclass[11pt,t]{beamer}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{paralist}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{etex} % Avoid an error due to a lack of registers
+\usepackage[ngerman]{babel} % Defines the language of macros as well
+\include{layout}
+
+\newcommand*\conj[1]{\bar{#1}}
+\newcommand*\mean[1]{\overline{#1}}
+
+\title[Theoretische Ozeanographie]{Turbulenzmodelle}
+\author[Florian Börgel]{Florian Börgel}
+\date{\today}
+\semester{Sommersemester 2016}
+\institute{Universität Oldenburg}
+
+\begin{document}
+
+\frame{\titlepage}
+\frame{\frametitle{Gliederung}\tableofcontents}
+
+%%%%%%%%%%%% Start of content %%%%%%%%%%%% 
+\section{Direct Numerical Simulation}
+\section{Reynold-Averaged Navier-Stokes Equation}
+\section{Schließungsproblem der Turbulenz}
+\section{Transport Energy Equation}
+\section{k-$\epsilon$ Model}
+\begin{frame}
+	\frametitle{DNS Verfahren}
+Die größten Wirbel in der Strömung haben den größten Anteil an dem Transport von Bewegung und Energie. Die größte Skala wird also durch 
+\begin{equation}
+L
+\end{equation}
+festgelegt. Die Größe der kleinsten Skala wird durch die Viskosität definiert. (Kinetische Energie wird in Wärme dissipiert)
+\begin{equation}
+\eta = (\frac{\nu^3}{\epsilon})^{1/4}
+\end{equation}
+\hspace{1cm}$\epsilon$ - Dissipationsrate\\
+\hspace{1cm}$\nu$ - Viskosität
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Turbulente Längenskalen}
+\begin{equation}
+\epsilon\thicksim \frac{U^3}{L}
+\end{equation}
+\begin{equation}
+\eta = \frac{\nu^3 * L}{U^3}
+\end{equation}
+Für $1D$ gilt also:
+\begin{equation}
+\frac{L}{\eta} = Re^{3/4} 
+\end{equation}
+(de Bruyn Kops: 8000*8000*8000)
+\end{frame}
+
+\begin{frame}
+	\frametitle{Schließungsproblem der Turbulenz}
+			\Fat{Vereinfachungen}:
+\begin{equation}
+\frac{\partial}{\partial t} = \partial_t, \hspace{0.3 cm}\frac{\partial}{\partial x} = \partial_x,\hspace{0.3 cm} \frac{\partial}{\partial x_i} = \partial_i
+\end{equation}
+\begin{equation}
+\sum_{j=x,y,z}u_j\partial_j = u_j\partial_j
+\end{equation}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Schließungsproblem der Turbulenz}
+	\Fat{Reynolds-Averaged Navier-Stokes Equations (RANS)}
+\begin{equation}
+\partial_t u_i + \partial_j u_ju_i = -\frac{1}{\rho}\partial_i p + \nu\partial^2_j u_i
+\end{equation}
+gemitteltep equation:
+\begin{equation}
+\partial_t \overline{u_i} + \partial_j \overline{u_ju_i} = -\frac{1}{\rho}\partial_i \overline{p} + \nu\partial^2_j \overline{u_i}
+\end{equation}
+Reynolds Decomposition
+\begin{equation}
+u = \overline{u} + u'
+\end{equation}
+\end{frame}
+
+\begin{frame}
+Einsetzen:
+\begin{align}
+\partial_t \overline{\bar{u_i}} + \partial_t \overline{u_i^{'}}+ \partial_j (\overline{\bar{u_i}*\bar{u_j}} + \overline{\bar{u_i}*u_j^{'}} + \overline{u_i^{'}*\bar{u_j}} + \overline{u_i^{'}*u_j^{'}}) \\
+= - \frac{1}{\rho}*\partial_i*(\overline{\bar{p}+p^{'}}) + \nu*\partial_j^2  (\overline{\bar{u_i}+u_i^{'}})
+\end{align}
+Es gilt $\overline{u^{'}},\overline{p^{'}} = 0$, daher:
+\begin{align}
+\partial_t \bar{u_i} + \partial_j (\overline{u_iu_j}+{\color{red}\overline{u_i^{'}u_j{'}}}) = - \frac{1}{\rho} \partial_i \bar{p}+\nu*\partial_j^2\bar{u_i}
+\end{align}
+\begin{align}
+\partial_tu_i+\partial_j(\mean{u_i^{'}u_j^{'}}) = - \frac{1}{\rho} \partial_i \bar{p}+\partial_j(\nu\partial_j\bar{u_i}-{\color{red}\overline{u_i^{'}u_j{'}}})
+\end{align}
+$\tau_{ij,turb} = -\rho\overline{u_i^{'}u_j{'}}$ = Reynold-Stress-Tensor
+\end{frame}
+\section{Schließungs Problem der Turbulenz}
+\begin{frame}
+Wie kann man den Reynold-Stress-Term beschreiben? Auch als Transport-Gleichung?
+\begin{align*}
+&\partial_t\overline{u_i^{'}u_j{'}}+u_k\partial_k\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_i}
+-\overline{u_j^{'}u_k{'}}\partial_k\overline{u_j}-\partial_k\overline{u_i^{'}u_j{'}u_k^{'}} \\&- \frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}})+\frac{1}{\rho}(\overline{p^{'}\partial_iu_j^{'}}+\overline{p^{'}\partial_ju_i^{'}})+\nu(\partial_k^{2}\overline{u_j^{'}u_i^{'}}-2\overline{\partial_ku_i^{'}\partial_ku_j^{'}})
+\end{align*}
+Umformen:
+\begin{align*}
+&\partial_t\overline{u_i^{'}u_j{'}}+u_k\partial_k\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_i}
+-\overline{u_i^{'}u_k{'}}\partial_k\overline{u_j}- 2\nu\overline{\partial_ku_i^{'}\partial_ku_j^{'}}\\&+\overline{\frac{p^{'}}{\rho}(\partial_iu_j^{'}+\partial_ju_i^{'})}+\partial_k (\nu\partial_k\overline{u_j^{'}u_i^{'}} -\overline{u_i^{'}u_j{'}u_k^{'}}-\frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}}))
+\end{align*}
+\end{frame}
+\begin{frame}
+Mit dieser Transportgleichung, kann nun die Transportgleichung für die turbulente kinetische Energie aufgestellt werden.\\
+Diese ist definiert als: $\mean{k} = \frac{1}{2}\mean{u_j^{'2}}$
+Setzt man nun in der Transport-Gleichung: i = j erhält man:
+\begin{align*}
+\partial_t \mean{k} + \mean{u_k}\partial_k \mean{k} = -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_j}
+-\overline{u_j^{'}u_k{'}}\partial_k\overline{u_j}- 2\nu\overline{\partial_ku_j^{'}\partial_ku_j^{'}}\\+\overline{\frac{p^{'}}{\rho}(\partial_ju_j^{'}+\partial_ju_j^{'})}+\partial_k (\nu\partial_k\overline{k} -\overline{k u_k^{'}}-\frac{1}{\rho}(\partial_j\overline{u_j^{'}p^{'}}+\partial_j\overline{u_j^{'}p^{'}}))
+\end{align*}
+
+\end{frame}
+\begin{frame}
+\begin{align*}
+\partial_t \mean{k} + \mean{u_k}\partial_k \mean{k} = -
+\end{align*}
+
+\end{frame}
+\begin{frame}
+Turbulenz Modelle:\\
+
+Die bisherigen Gleichungen sind nicht geschlossen. Deshalb wird der Reynold-Stress-Tensor modelliert.
+\begin{align*}
+\overline{u_i^{'}u_j{'}} = \nu_t(\partial_j \bar{u_i} + \partial_i \bar{u_j})-\frac{2}{3}\mean{k}\delta_{ij}
+\end{align*}
+$\nu_t$ ist die Wirbelviskosität (Analog zur Idee vom molekularen shear stress) 
+\end{frame}
+\begin{frame}
+Turbulenz Modelle\\
+Es gibt verschiedene Modelle um das Problem zu lösen. \\
+\begin{tabular}{l l}
+&\\
+Prandtl mixing-length: & $\nu_t = l_m^2\overline{S_{ij}}$\\
+&\\
+TKE Modelle: e.g Prandtl-Kolmogorov: &$\nu_t = C_\mu l_{pk}\sqrt{k}$\\
+&\\
+k-$\epsilon$-Modell & $\nu_t = C_\mu \frac{k^2}{\epsilon}$\\
+\end{tabular}
+\end{frame}
+\begin{frame}
+Prandtl mixing-length:
+\begin{equation}
+\nu_t = l_m^2\overline{S_{ij}},\hspace{0.5cm}\overline{S_{ij}} = \frac{1}{2}(\partial_i \overline{u_j} + \partial_j \overline{u_i})
+\end{equation}
+\begin{itemize}
+\item[•]Based on dimensional analysis
+\item[•]Empirical methods for determining $l_m$
+\item[•]Assumption $l_m$ = const.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{k-$\epsilon$-Modell}
+\begin{equation}
+\nu_t = C_\mu \frac{k^2}{\epsilon}
+\end{equation}
+\end{frame}
+%%%%%%%%%%%% End of content %%%%%%%%%%%%
+
+\input{end.tex}
+
+%%%%%%%%%%%% Start of appendix %%%%%%%%%%%% 
+
+%%%%%%%%%%%% End of appendix %%%%%%%%%%%%
+
+\end{document}
