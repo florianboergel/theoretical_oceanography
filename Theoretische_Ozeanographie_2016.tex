@@ -108,13 +108,13 @@ $\tau_{ij,turb} = -\rho\overline{u_i^{'}u_j{'}}$ = Reynold-Stress-Tensor
 \begin{frame}
 Wie kann man den Reynold-Stress-Term beschreiben? Auch als Transport-Gleichung?
 \begin{align*}
-&\partial_t\overline{u_i^{'}u_j{'}}+u_k\partial_k\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_i}
--\overline{u_j^{'}u_k{'}}\partial_k\overline{u_j}-\partial_k\overline{u_i^{'}u_j{'}u_k^{'}} \\&- \frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}})+\frac{1}{\rho}(\overline{p^{'}\partial_iu_j^{'}}+\overline{p^{'}\partial_ju_i^{'}})+\nu(\partial_k^{2}\overline{u_j^{'}u_i^{'}}-2\overline{\partial_ku_i^{'}\partial_ku_j^{'}})
+&\partial_t\overline{u_i^{'}u_j{'}}+u_a\partial_a\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_a{'}}\partial_a\bar{u_i}
+-\overline{u_j^{'}u_a{'}}\partial_a\overline{u_j}-\partial_a\overline{u_i^{'}u_j{'}u_a^{'}} \\&- \frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}})+\frac{1}{\rho}(\overline{p^{'}\partial_iu_j^{'}}+\overline{p^{'}\partial_ju_i^{'}})+\nu(\partial_a^{2}\overline{u_j^{'}u_i^{'}}-2\overline{\partial_au_i^{'}\partial_au_j^{'}})
 \end{align*}
 Umformen:
 \begin{align*}
-&\partial_t\overline{u_i^{'}u_j{'}}+u_k\partial_k\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_i}
--\overline{u_i^{'}u_k{'}}\partial_k\overline{u_j}- 2\nu\overline{\partial_ku_i^{'}\partial_ku_j^{'}}\\&+\overline{\frac{p^{'}}{\rho}(\partial_iu_j^{'}+\partial_ju_i^{'})}+\partial_k (\nu\partial_k\overline{u_j^{'}u_i^{'}} -\overline{u_i^{'}u_j{'}u_k^{'}}-\frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}}))
+&\partial_t\overline{u_i^{'}u_j{'}}+u_a\partial_a\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_a{'}}\partial_a\bar{u_i}
+-\overline{u_i^{'}u_a{'}}\partial_a\overline{u_j}- 2\nu\overline{\partial_au_i^{'}\partial_au_j^{'}}\\&+\overline{\frac{p^{'}}{\rho}(\partial_iu_j^{'}+\partial_ju_i^{'})}+\partial_a (\nu\partial_a\overline{u_j^{'}u_i^{'}} -\overline{u_i^{'}u_j{'}u_a^{'}}-\frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}}))
 \end{align*}
 \end{frame}
 \begin{frame}
@@ -122,16 +122,16 @@ Mit dieser Transportgleichung, kann nun die Transportgleichung für die turbulen
 Diese ist definiert als: $\mean{k} = \frac{1}{2}\mean{u_j^{'2}}$
 Setzt man nun in der Transport-Gleichung: i = j erhält man:
 \begin{align*}
-\partial_t \mean{k} + \mean{u_k}\partial_k \mean{k} = -\overline{u_j^{'}u_k{'}}\partial_k\bar{u_j}
--\overline{u_j^{'}u_k{'}}\partial_k\overline{u_j}- 2\nu\overline{\partial_ku_j^{'}\partial_ku_j^{'}}\\+\overline{\frac{p^{'}}{\rho}(\partial_ju_j^{'}+\partial_ju_j^{'})}+\partial_k (\nu\partial_k\overline{k} -\overline{k u_k^{'}}-\frac{1}{\rho}(\partial_j\overline{u_j^{'}p^{'}}+\partial_j\overline{u_j^{'}p^{'}}))
+2\partial_t \mean{k} + 2\mean{u_a}\partial_a \mean{k} = -2\overline{u_j^{'}u_a{'}}\partial_a\bar{u_j}
+- 2\nu\overline{\partial_au_j^{'}\partial_au_j^{'}}\\+\overline{\frac{p^{'}}{\rho}(\partial_ju_j^{'}+\partial_ju_j^{'})}+\partial_a (2\nu\partial_a\overline{k} -2\overline{k u_a^{'}}-\frac{2}{\rho}(\partial_j\overline{u_j^{'}p^{'}}))
 \end{align*}
 
 \end{frame}
 \begin{frame}
 \begin{align*}
-\partial_t \mean{k} + \mean{u_k}\partial_k \mean{k} = -
+\partial_t \mean{k} + \mean{u_k}\partial_k \mean{k} = -\overline{u_j^{'}u_a{'}}\partial_a\bar{u_j}- \bar{\epsilon} - \partial_a (\nu\partial_a\overline{k} -\overline{k u_a^{'}}-\frac{1}{\rho}(\partial_j\overline{u_j^{'}p^{'}}))\\
 \end{align*}
-
+Viele neue Unbekannte, aber immer noch keine Lösung.
 \end{frame}
 \begin{frame}
 Turbulenz Modelle:\\
@@ -144,7 +144,7 @@ $\nu_t$ ist die Wirbelviskosität (Analog zur Idee vom molekularen shear stress)
 \end{frame}
 \begin{frame}
 Turbulenz Modelle\\
-Es gibt verschiedene Modelle um das Problem zu lösen. \\
+Es gibt verschiedene Modelle um das Problem zu lösen. Hier Wirbelviskosität-Modelle\\
 \begin{tabular}{l l}
 &\\
 Prandtl mixing-length: & $\nu_t = l_m^2\overline{S_{ij}}$\\
@@ -167,9 +167,11 @@ Prandtl mixing-length:
 \end{frame}
 \begin{frame}
 \frametitle{k-$\epsilon$-Modell}
-\begin{equation}
-\nu_t = C_\mu \frac{k^2}{\epsilon}
-\end{equation}
+\begin{align*}
+\nu_t &= C_\mu \frac{k^2}{\epsilon}\\
+\partial_t \mean{k}+ \mean{u_i}\partial_i \mean{k} &= P_k - \mean{\epsilon} + \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k})\\
+\partial_t \mean{\epsilon}+ \mean{u_i}\partial_i \mean{\epsilon} &= \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k}) + \frac{\epsilon}{\mean{k}}(c_{\epsilon 1}P_{k}+c_{\epsilon 2}\mean{\epsilon})
+\end{align*}
 \end{frame}
 %%%%%%%%%%%% End of content %%%%%%%%%%%%
 
