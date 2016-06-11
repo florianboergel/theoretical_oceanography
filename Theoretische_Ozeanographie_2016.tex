@@ -38,9 +38,10 @@
 \frametitle{DNS}
 \begin{figure}
 \includegraphics[width=0.8\linewidth]{images/cascade.png}
-			\caption{Energiekaskade}
+\caption{Energiekaskade}
 \end{figure}
 \end{frame}
+
 \begin{frame}
 	\frametitle{DNS}
 Die größten Wirbel in der Strömung haben den größten Anteil an dem Transport von Bewegung und Energie. Die größte Skala wird also durch 
@@ -78,7 +79,13 @@ strongly stratified Boussinesq turbulence. Journal of Fluid Mechanics
 775, 436–463. doi:10.1017/jfm.2015.274
 \end{quote}
 \end{frame}
-
+\begin{frame}
+\begin{figure}
+\frametitle{DNS}
+\includegraphics[width=0.5\linewidth]{images/DNS_HOMOG_Shear_zoom.png}
+			\caption{DNS Simulation}
+\end{figure}
+\end{frame}
 
 \section{Reynold-Averaged Navier-Stokes Equation}
 
@@ -120,7 +127,7 @@ Es gilt $\overline{u^{'}},\overline{p^{'}} = 0$, daher:
 \partial_t \bar{u_i} + \partial_j (\overline{u_iu_j}+{\color{red}\overline{u_i^{'}u_j{'}}}) = - \frac{1}{\rho} \partial_i \bar{p}+\nu*\partial_j^2\bar{u_i}
 \end{align}
 \begin{align}
-\partial_tu_i+\partial_j(\mean{u_i^{'}u_j^{'}}) = - \frac{1}{\rho} \partial_i \bar{p}+\partial_j(\nu\partial_j\bar{u_i}-{\color{red}\overline{u_i^{'}u_j{'}}})
+\partial_tu_i+\partial_j(\mean{u_iu_j}) = - \frac{1}{\rho} \partial_i \bar{p}+\partial_j(\nu\partial_j\bar{u_i}-{\color{red}\overline{u_i^{'}u_j{'}}})
 \end{align}
 $\tau_{ij,turb} = -\rho\overline{u_i^{'}u_j{'}}$ = Reynold-Stress-Tensor
 \end{frame}
@@ -128,8 +135,7 @@ $\tau_{ij,turb} = -\rho\overline{u_i^{'}u_j{'}}$ = Reynold-Stress-Tensor
 \begin{frame}
 Wie kann man den Reynold-Stress-Term beschreiben? Auch als Transport-Gleichung?
 \begin{align*}
-&\partial_t\overline{u_i^{'}u_j{'}}+u_a\partial_a\overline{u_i^{'}u_j{'}} =\\& -\overline{u_j^{'}u_a{'}}\partial_a\bar{u_i}
--\overline{u_j^{'}u_a{'}}\partial_a\overline{u_j}-\partial_a\overline{u_i^{'}u_j{'}u_a^{'}} \\&- \frac{1}{\rho}(\partial_i\overline{u_j^{'}p^{'}}+\partial_j\overline{u_i^{'}p^{'}})+\frac{1}{\rho}(\overline{p^{'}\partial_iu_j^{'}}+\overline{p^{'}\partial_ju_i^{'}})+\nu(\partial_a^{2}\overline{u_j^{'}u_i^{'}}-2\overline{\partial_au_i^{'}\partial_au_j^{'}})
+u_j - \mean{u_j}
 \end{align*}
 Umformen:
 \begin{align*}
@@ -156,6 +162,11 @@ Setzt man nun in der Transport-Gleichung: i = j erhält man:
 &\underbrace{\partial_t \mean{k}} + \underbrace{\mean{u_k}\partial_k \mean{k}} = -\underbrace{\overline{u_j^{'}u_a{'}}\partial_a\bar{u_j}}- \underbrace{\bar{\epsilon}} - \underbrace{\partial_a (\nu\partial_a\overline{k} -\overline{k u_a^{'}}-\frac{1}{\rho}(\partial_j\overline{u_j^{'}p^{'}}))}\\
 &\hspace{0.3cm}L \hspace{1.1cm}C \hspace{1.8cm}P\hspace{1.1cm} DS \hspace{2.3cm}TS\\
 \end{align*}
+$L$: Local change\\
+$C$: convective change\\
+$P$: Production \\
+$DS$: dissipation \\
+$TS$: Transport \\
 \end{frame}
 
 \section{Turbulenz-Modelle}
@@ -166,6 +177,13 @@ Die bisherigen Gleichungen sind nicht geschlossen. Deshalb wird der Reynold-Stre
 \overline{u_i^{'}u_j{'}} = \nu_t(\partial_j \bar{u_i} + \partial_i \bar{u_j})-\frac{2}{3}\mean{k}\delta_{ij}
 \end{align*}
 $\nu_t$ ist die Wirbelviskosität (Analog zur Idee vom molekularen shear stress) 
+\end{frame}
+\begin{frame}
+\frametitle{Turbulenz-Modelle}
+\begin{figure}
+\includegraphics[width=0.8\linewidth]{images/turbulenz.png}
+			\caption{(links) Beobachtete und (rechts) simulierte vertikale Profile [2] }
+\end{figure}
 \end{frame}
 \begin{frame}
 \frametitle{Turbulenz-Modelle}
@@ -195,23 +213,31 @@ k-$\epsilon$-Modell & $\nu_t = C_\mu \frac{k^2}{\epsilon}$& 2-Gleichungs-Modell\
 
 \begin{frame}
 Setzen wir diese Beziehung einmal ein:
+\vspace{1cm}
 \begin{align*}
-P &= -\mean{u_i^{'}u_j^{'}}\partial_j\mean{u_i}\\
 P &= (\nu_t(\partial_j \bar{u_i} + \partial_i \bar{u_j})-\frac{2}{3}\mean{k}\delta_{ij})\partial_j\mean{u_i}\\
-TS &= \partial_a (\nu\partial_a\overline{k} -\overline{k u_a^{'}}-\frac{1}{\rho}(\partial_j\overline{u_j^{'}p^{'}}))\\
 TS &= \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k})
 \end{align*}
 \end{frame}
 
 \begin{frame}
 \frametitle{k-$\epsilon$-Modell}
+3-Navierstokes-Gleichungen\\
+Kontinuitätsgleichung\\
 \begin{align*}
-\nu_t &= C_\mu \frac{k^2}{\epsilon}\\
-\partial_t \mean{k}+ \mean{u_i}\partial_i \mean{k} &= P_k - \mean{\epsilon} + \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k})\\
-\partial_t \mean{\epsilon}+ \mean{u_i}\partial_i \mean{\epsilon} &= \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k}) + \frac{\epsilon}{\mean{k}}(c_{\epsilon 1}P_{k}+c_{\epsilon 2}\mean{\epsilon})
+Energiekaskade:& \hspace{0.2cm}\nu_t = C_\mu \frac{k^2}{\epsilon}\\
+k-Gleichung:& \hspace{0.2cm}\partial_t \mean{k}+ \mean{u_i}\partial_i \mean{k} = P_k - \mean{\epsilon} + \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k})\\
+\epsilon-Gleichung:&
+\hspace{0.2cm}\partial_t \mean{\epsilon}+ \mean{u_i}\partial_i \mean{\epsilon} = \partial_i(\frac{\nu_t}{Pr_k} \partial_i \mean{k}) + \frac{\epsilon}{\mean{k}}(c_{\epsilon 1}P_{k}+c_{\epsilon 2}\mean{\epsilon})
 \end{align*}
 \end{frame}
-
+\begin{frame}
+\frametitle{Numerisches Mischen}
+U. Riemenschneider hat in Ihrem Paper gezeigt, dass das numerische Mischen die Turbulenzmodellierung stark beeinflusst, bzw. komplett ersetzen kann.\\
+\vspace{1cm}
+$\rightarrow$ Turbulenzmodelle werde auf das numerische Mischen kalibriert.\\
+$\rightarrow$ Nur bei kleinen Gittern nicht wichtig. 
+\end{frame}
 \section{Einsatz in der Ozeanographie}
 \begin{frame}
 \frametitle{Einsatz in der Ozeanographie}
@@ -221,18 +247,34 @@ Wie werden dieses Ideen jetzt in der Ozeanographie eingesetzt?
 \end{quote}
 \\
 $\Rightarrow$ k-$\epsilon$ Modell\\
-\vspace{1cm}
+\vspace{0.5cm}
 Für die vertikalen turbulenten Strömungen gibt es bereits Schließungsmodelle.
-Bei horizontalen wird die Diffusion entweder ignoriert oder eine konstante horizontale Viskosität gewählt.
+Bei horizontalen Strömungen ist es nicht so ausgeprägt. Hier wird die Diffusion entweder ignoriert oder eine konstante horizontale Viskosität gewählt. Ansätze sind jedoch vorhanden.\\
+LES-ähnlicher Ansatz:
+\begin{align*}
+A_h=c(\Delta x\Delta y)\sqrt{(\partial_x u)^2*\frac{1}{2}(\partial_y u+ \partial_x v)^2 + (\partial_y v)^2}
+\\
+\end{align*}
 \end{frame}
 \begin{frame}
 \frametitle{Ozeanmodellierung}
 GETM  (General Estuarine Transport Model): 3D Transportmodell für Ozeane\\
-\pause
+\begin{figure}
+\includegraphics[width=0.7\linewidth]{images/getm.png}
+\caption{mit GETM modellierte Ostsee}
+\end{figure}
 Kopplung mit $\Rightarrow$ GOTM (General Ocean Turbulence Modell)
-
 \end{frame}
-
+\begin{frame}
+\frametitle{Quellen}
+\footnotesize
+- Purkiani, K., J. Becherer, G. Floser,u. Gräwe,V.Mohrholz,H.M.Schuttelaars,
+and H. Burchard (2015), Numerical analysis of stratification and destratification processes in a tidally energetic inlet with an ebb tidal delta, J. Geophys. Res. Oceans,
+120, 225–243, doi:10.1002/2014JC010325.\\
+- Riemenschneider, U., Legg, S., 2007. Regional simulations of the Faroe Bank Channel overflow in a level model. Ocean Modelling 17, 93–122.\\
+- de Bruyn Kops, S.M., 2015. Classical scaling and intermittency in strongly stratified Boussinesq turbulence. Journal of Fluid Mechanics 775, 436–463. doi:10.1017/jfm.2015.274\\
+- H. Burchard, U. Gräwe, P. Holtermann, K. Klingbeil a. Lars Umlauf, Turbulence Closure Modelling in Coastal Waters, Die Küste, 81 (2014), 69-87\\
+\end{frame}
 %%%%%%%%%%%% End  %%%%%%%%%%%%
 
 \input{end.tex}
